@@ -1,11 +1,11 @@
-package com.pribas.pribasmonolithic.model;
+package com.pribas.pribasmonolithic.dto.request;
 
+import com.pribas.pribasmonolithic.model.BaseEntity;
+import com.pribas.pribasmonolithic.model.Moment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
@@ -13,13 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Document
-public class Timeline extends BaseEntity{
+public class TimelineRequestDto extends BaseEntity {
 
-    @Id
     private String timelineId;
     private List<Moment> moments;
-    private Long user_id; // nasıl userid: ref,
+    private Long user_id;
     private List<String> tags;
-
 }

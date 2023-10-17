@@ -19,21 +19,11 @@ import java.util.List;
 public class Moment extends BaseEntity {
 
     @Id
-    private String MomentId;
-    private Info info;
+    private String momentId;
     @Builder.Default
     private LocalDateTime momentTime=LocalDateTime.now();
     private List<String> attachments; // attachments: [ File ],
-//    private BaseEntity creationDate; // sor
 
-
-//    moment:{
-//        title: String,
-//                description: String,
-//                moment_date: datetime,
-//                attachments: [ File ],
-//        creation_date: datetime
-//    }
 
 
 }
