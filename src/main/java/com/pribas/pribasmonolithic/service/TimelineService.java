@@ -1,2 +1,4 @@
-package com.pribas.pribasmonolithic.service;public class TimelineController {
+package com.pribas.pribasmonolithic.service;
+
+public class TimelineService {
 }

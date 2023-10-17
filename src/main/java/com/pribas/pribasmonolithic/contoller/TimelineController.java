@@ -1,2 +1,4 @@
-package com.pribas.pribasmonolithic.contoller;public class TimelineController {
+package com.pribas.pribasmonolithic.contoller;
+
+public class TimelineController {
 }

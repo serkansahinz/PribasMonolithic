@@ -1,4 +1,4 @@
-package com.bilgeadam.exception;
+package com.pribas.pribasmonolithic.exception;
 
 import lombok.Getter;
 

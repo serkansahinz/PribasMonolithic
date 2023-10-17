@@ -1,4 +1,4 @@
-package com.pribas.pribasmonolithic.entity;
+package com.pribas.pribasmonolithic.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 
 public class Info {
     private String title;

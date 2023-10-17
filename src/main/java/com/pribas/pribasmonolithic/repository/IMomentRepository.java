@@ -1,2 +1,4 @@
-package com.pribas.pribasmonolithic.repository;public interface IMomentRepository {
+package com.pribas.pribasmonolithic.repository;
+
+public interface IMomentRepository {
 }

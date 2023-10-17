@@ -1,1 +1,10 @@
-
+server:
+  port: 8080
+#spring:
+#  data:
+#    mongodb:
+#      host: localhost
+#      port: 27010
+#      username: pribas
+#      password: root
+#      database: userDb

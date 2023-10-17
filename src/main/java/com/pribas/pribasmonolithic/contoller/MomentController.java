@@ -1,2 +1,4 @@
-package com.pribas.pribasmonolithic.contoller;public class MomentController {
+package com.pribas.pribasmonolithic.contoller;
+
+public class MomentController {
 }
