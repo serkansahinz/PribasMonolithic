@@ -19,13 +19,6 @@ import java.util.List;
 @ControllerAdvice
 //@RestControllerAdvice
 public class GlobalExceptionHandler {
-
-
-
-
-
-
-
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorMessage> handleRunTimeException(RuntimeException ex){
         return new ResponseEntity<>( createError(ErrorType.UNEXPECTED_ERROR,ex, ex.getMessage()),HttpStatus.BAD_REQUEST);
