@@ -1,6 +1,6 @@
 package com.pribas.pribasmonolithic.dto.response;
 
-import com.pribas.pribasmonolithic.model.BaseEntity;
+import com.pribas.pribasmonolithic.model.Info;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class MomentResponseDto extends BaseEntity {
+public class MomentResponseDto extends Info {
 
 
     private LocalDateTime momentTime; // todo oluşan zamanlar karışır mı neye göre zamanları oluşturdu

@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 @Document
-public class Moment extends BaseEntity {
+public class Moment extends Info {
 
     @Id
     private String momentId;

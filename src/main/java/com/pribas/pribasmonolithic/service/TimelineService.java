@@ -41,7 +41,7 @@ public class TimelineService {
         Optional<Timeline> timeline=timelineRepository.findById(timelineRequestDto.getTimelineId());
         timeline.get().setTitle(timelineRequestDto.getTitle());
         timeline.get().setDescription(timelineRequestDto.getDescription());
-        timeline.get().setUpdateDate(LocalDateTime.now());
+//        timeline.get().setUpdateDate(LocalDateTime.now());
         timeline.get().setTags(timelineRequestDto.getTags());
         timelineRepository.save(timeline.get());
         return ITimelineMapper.INSTANCE.toTimeLineResponseDto(timeline.get());

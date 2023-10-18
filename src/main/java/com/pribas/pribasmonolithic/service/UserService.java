@@ -18,6 +18,7 @@ public class UserService {
     public final IUserRepository userRepository;
 
     public UserResponseDto createUser(UserRequestDto userRequestDto) {
+        //if ile already exist yapılabilir hata yazılabilir
         User user = IUserMapper.INSTANCE.toUser(userRequestDto);
        userRepository.save(user);
        return IUserMapper.INSTANCE.toUserResponseDto(user);
@@ -38,7 +39,7 @@ public class UserService {
 
     public User findUserById(String id) throws ResourceNotFoundException {
           User user = userRepository.findById(id).
-                orElseThrow(()->new ResourceNotFoundException("User not found id: " + id));
+                orElseThrow( ()-> new ResourceNotFoundException("User not found id: " + id));
         return user;
     }
 

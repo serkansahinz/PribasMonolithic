@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 @Document
-public class Timeline extends BaseEntity{
+public class Timeline extends Info{
 
     @Id
     private String timelineId;
