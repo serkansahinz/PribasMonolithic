@@ -2,23 +2,24 @@ package com.pribas.pribasmonolithic.contoller;
 
 import com.pribas.pribasmonolithic.dto.response.MomentResponseDto;
 import com.pribas.pribasmonolithic.model.Moment;
-import com.pribas.pribasmonolithic.model.Timeline;
+
 import com.pribas.pribasmonolithic.service.MomentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import static com.pribas.pribasmonolithic.constant.RestApiUrl.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/Moment")
+@RequestMapping(MOMENTS)
 public class MomentController {
 
     public final MomentService momentService;
 
-    @GetMapping("/find_all")
+    @GetMapping(FINDALL)
     public ResponseEntity<List<Moment>> findAllMoments(){
         return ResponseEntity.ok(momentService.findAllMoments());
     }

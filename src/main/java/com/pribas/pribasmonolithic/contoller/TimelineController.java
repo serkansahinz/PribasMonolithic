@@ -7,18 +7,19 @@ import com.pribas.pribasmonolithic.service.TimelineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import static com.pribas.pribasmonolithic.constant.RestApiUrl.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/timeline")
+@RequestMapping(TIMELINE)
 public class TimelineController {
     
     public final TimelineService timelineService;
 
 
-    @GetMapping("/find_all")
+    @GetMapping(FINDALL)
     public ResponseEntity<List<Timeline>> findAllTimelines(){
         return ResponseEntity.ok(timelineService.findAllTimelines());
     }

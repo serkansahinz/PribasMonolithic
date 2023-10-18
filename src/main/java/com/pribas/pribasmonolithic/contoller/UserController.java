@@ -22,12 +22,12 @@ public class UserController {
     public final UserService userService;
 
 
-    @GetMapping("find_all")
+    @GetMapping(FINDALL)
     public ResponseEntity<List<User>> findAllUsers(){
         return ResponseEntity.ok(userService.findAllUsers());
     }
 
-    @GetMapping("find_user_by_id/{id}")
+    @GetMapping("/find_user_by_id/{id}")
     public ResponseEntity<User> findUserById(@PathVariable String id) throws ResourceNotFoundException {
         return ResponseEntity.ok(userService.findUserById(id));
     }
@@ -37,12 +37,12 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(userRequestDto));
 
     }
-    @PutMapping("update_user")
+    @PutMapping("/update_user")
     public ResponseEntity<UserResponseDto> updateUser(@RequestBody UserRequestDto userRequestDto){
         return ResponseEntity.ok(userService.updateUserByName(userRequestDto));
     }
 
-    @DeleteMapping("delete_user_by_id/{id}")
+    @DeleteMapping("/delete_user_by_id/{id}")
     public String deleteUser(@PathVariable String id){
         return userService.deleteUser(id);
     }
