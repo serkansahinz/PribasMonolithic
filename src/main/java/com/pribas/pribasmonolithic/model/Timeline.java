@@ -18,6 +18,7 @@ public class Timeline extends BaseEntity{
 
     @Id
     private String timelineId;
+    private Info info;
     private List<Moment> moments;
     private Long user_id; // nasıl userid: ref,
     private List<String> tags;

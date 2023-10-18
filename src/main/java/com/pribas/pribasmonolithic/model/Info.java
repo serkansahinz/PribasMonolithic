@@ -10,7 +10,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 
-public class Info { // TODO: 17.10.2023 bu sınıfa gerek var mı sil herşey bitince
+public class Info {
+
     private String title;
     private String description;
 

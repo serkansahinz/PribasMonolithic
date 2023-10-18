@@ -1,0 +1,11 @@
+-This is a Java Spring Boot Framework backend project with Layered Architecture.
+-Gradle is the ...
+-You can see Controller, Service, and Repository(DAO) Layers.
+-Client ↔ ︎Controller ↔ Service ↔ Repository(DAO) ↔ MongoDB
+-MongoDB has been used and can be setup in Docker. All you have to do is run mongoDb in docker-compose.yml file
+-Given entities are User, Timeline, and Moment (BaseEntity and Info are used to eliminate code repetition thus Inheritence has been applied)
+-One can benefit from CRUD(Create, Read, Update,Delete) operations thanks to RestAPI
+-Swagger is the tool to simulate all operations(one can reach operations thanks to end points)
+-Data Transfer Object (Dto) has been used so that some important fields/information can be hidden from the client
+-Exceptions...
+-Settings...

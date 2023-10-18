@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
+
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -13,11 +13,9 @@ import java.time.LocalDateTime;
 @Data
 @SuperBuilder
 
-public class BaseEntity implements Serializable { // TODO: 17.10.2023 neden gerekli
+public class BaseEntity { // TODO: 17.10.2023 neden gerekli
 
-    private String title;
-    private String description;
+
     private LocalDateTime creationDate;
-    private LocalDateTime updateDate;
 
 }

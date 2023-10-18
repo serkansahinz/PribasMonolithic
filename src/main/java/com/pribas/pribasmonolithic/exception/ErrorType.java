@@ -21,10 +21,7 @@ public enum ErrorType {
     DATA_INTEGRITY(4116, "wrong data",HttpStatus.BAD_REQUEST),
     LOGIN_ERROR(4117, "Wrong username or password !!!",HttpStatus.BAD_REQUEST),
     INVALID_TOKEN(4118, "Invalid Token !!!",HttpStatus.BAD_REQUEST),
-    TOKEN_NOT_CREATED(4119, "Token cannot be created !!!",HttpStatus.BAD_REQUEST),
-
-
-    ;
+    TOKEN_NOT_CREATED(4119, "Token cannot be created !!!",HttpStatus.BAD_REQUEST);
 
 
     private int code;

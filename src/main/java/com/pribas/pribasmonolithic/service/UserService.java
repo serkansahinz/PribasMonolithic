@@ -2,10 +2,12 @@ package com.pribas.pribasmonolithic.service;
 
 import com.pribas.pribasmonolithic.dto.request.UserRequestDto;
 import com.pribas.pribasmonolithic.dto.response.UserResponseDto;
+import com.pribas.pribasmonolithic.exception.ResourceNotFoundException;
 import com.pribas.pribasmonolithic.mapper.IUserMapper;
 import com.pribas.pribasmonolithic.model.User;
 import com.pribas.pribasmonolithic.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -34,14 +36,16 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findUserById(String id) {
-        return  userRepository.findById(id);
+    public User findUserById(String id) throws ResourceNotFoundException {
+          User user = userRepository.findById(id).
+                orElseThrow(()->new ResourceNotFoundException("User not found id: " + id));
+        return user;
     }
 
     public String deleteUser(String id) {
         Optional<User> user = userRepository.findById(id);
         if(user.isEmpty()){
-            return "No such user";
+            return "User not found";
         }
 
         userRepository.deleteById(id);

@@ -10,15 +10,31 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-//Aop
+
 @ControllerAdvice
-//@RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> globalExceptionHandler (Exception exception, WebRequest request){
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> ResourceNotFoundException (Exception exception, WebRequest request){
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+    }
+
+
+//-----
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorMessage> handleRunTimeException(RuntimeException ex){
         return new ResponseEntity<>( createError(ErrorType.UNEXPECTED_ERROR,ex, ex.getMessage()),HttpStatus.BAD_REQUEST);

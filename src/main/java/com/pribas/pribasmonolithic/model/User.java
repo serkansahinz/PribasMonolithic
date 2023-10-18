@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 @SuperBuilder
 @Document
 
-public class User {
+public class User extends BaseEntity{
     @Id
     private String userId;
     @NotBlank(message = "please enter your user name")
