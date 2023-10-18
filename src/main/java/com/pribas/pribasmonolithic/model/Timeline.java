@@ -18,7 +18,6 @@ public class Timeline extends Info{
 
     @Id
     private String timelineId;
-    private Info info;
     private List<Moment> moments;
     private Long user_id; // nasıl userid: ref,
     private List<String> tags;

@@ -27,10 +27,6 @@ public class MomentController {
     public ResponseEntity<Optional<Moment>> findMomentById(@PathVariable String id){
         return ResponseEntity.ok(momentService.findMomentById(id));
     }
-//    @GetMapping("/find_by_timeline")
-//    public ResponseEntity<List<Moment>> findMomentsByTimeline(@RequestBody Timeline timeline){
-//        return  ResponseEntity.ok(momentService.findMomentsByTimeline(timeline));
-//    }
 
     @PostMapping("/create_moment")
     public ResponseEntity<MomentResponseDto> createMoment(@RequestBody Moment moment){
@@ -42,10 +38,6 @@ public class MomentController {
         return ResponseEntity.ok(momentService.updateMomentByTitle(moment));
     }
 
-//    @DeleteMapping("/delete_moment_by_title")
-//    public String deleteMoment(@RequestParam String title){
-//        return momentService.deleteMomentByTitle(title);
-//    }
     @DeleteMapping("/delete_moment")
     public String deleteMoment(@RequestBody Moment moment){
         return momentService.deleteMoment(moment);

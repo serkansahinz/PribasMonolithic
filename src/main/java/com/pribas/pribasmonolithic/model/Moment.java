@@ -20,7 +20,6 @@ public class Moment extends Info {
 
     @Id
     private String momentId;
-    private Info info;
     @Builder.Default
     private LocalDateTime momentTime=LocalDateTime.now();
     private List<String> attachments; // attachments: [ File ],
