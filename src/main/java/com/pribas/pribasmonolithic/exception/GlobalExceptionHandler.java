@@ -1,36 +1,78 @@
 package com.pribas.pribasmonolithic.exception;
 
-
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import org.springframework.dao.DataIntegrityViolationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingPathVariableException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-
-@ControllerAdvice
+@RestControllerAdvice
+@Slf4j //todo
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> globalExceptionHandler (Exception exception, WebRequest request){
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  @ExceptionHandler(RuntimeException.class)
+  public ResponseEntity<ErrorMessage> handleRunTimeException(RuntimeException ex) {
+	ex.printStackTrace();
+	log.error(ex.toString());
+	return new ResponseEntity<>(createError(ErrorType.UNEXPECTED_ERROR,ex,ex.getMessage()),HttpStatus.BAD_REQUEST);
+  }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> resourceNotFoundException (Exception exception, WebRequest request){
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
-    }
+  @ExceptionHandler(MomentException.class)
+  public ResponseEntity<ErrorMessage> handleManagerException(MomentException exception) {
+	ErrorType errorType = exception.getErrorType();
+	HttpStatus httpStatus = errorType.getHttpStatus();
+	ErrorMessage errorMessage = createError(errorType,exception);
+	errorMessage.setMessage(exception.getMessage());
 
+	return new ResponseEntity<>(errorMessage,httpStatus);
+  }
+
+  @ExceptionHandler(MomentException.class)
+  public ResponseEntity<ErrorMessage> handleManagerException(TimelineException exception) {
+	ErrorType errorType = exception.getErrorType();
+	HttpStatus httpStatus = errorType.getHttpStatus();
+	ErrorMessage errorMessage = createError(errorType,exception);
+	errorMessage.setMessage(exception.getMessage());
+
+	return new ResponseEntity<>(errorMessage,httpStatus);
+  }
+
+  @ExceptionHandler(MomentException.class)
+  public ResponseEntity<ErrorMessage> handleManagerException(UserException exception) {
+	ErrorType errorType = exception.getErrorType();
+	HttpStatus httpStatus = errorType.getHttpStatus();
+	ErrorMessage errorMessage = createError(errorType,exception);
+	errorMessage.setMessage(exception.getMessage());
+
+	return new ResponseEntity<>(errorMessage,httpStatus);
+  }
+
+  @ExceptionHandler(Exception.class)
+  public final ResponseEntity<ErrorMessage> handleAllExceptions(Exception exception) {
+	ErrorType errorType = ErrorType.INTERNAL_ERROR_SERVER;
+	List<String> fields = new ArrayList<>();
+	fields.add(exception.getMessage());
+	ErrorMessage errorMessage = createError(errorType,exception);
+	errorMessage.setFields(fields);
+	return new ResponseEntity<>(createError(errorType,exception),errorType.getHttpStatus());
+  }
+
+  private ErrorMessage createError(ErrorType errorType,Exception exception) {
+	System.out.println("Hata olustu: " + exception.getMessage());
+	return ErrorMessage.builder()
+					   .code(errorType.getCode())
+					   .message(errorType.getMessage())
+					   .build();
+  }
+
+  private ErrorMessage createError(ErrorType errorType,Exception exception,String message) {
+	System.out.println("Hata olustu: " + exception.getMessage());
+	return ErrorMessage.builder()
+					   .code(errorType.getCode())
+					   .message(message)
+					   .build();
+  }
 }

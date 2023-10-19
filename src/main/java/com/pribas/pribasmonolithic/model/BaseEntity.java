@@ -1,6 +1,7 @@
 package com.pribas.pribasmonolithic.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -11,10 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
+public class BaseEntity {
 
-public class Info {
-
-    private String title;
-    private String description;
+    @Builder.Default
+    private LocalDateTime creationDate=LocalDateTime.now();
 
 }

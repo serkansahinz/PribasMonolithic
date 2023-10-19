@@ -1,7 +1,10 @@
 package com.pribas.pribasmonolithic.service;
 
 import com.pribas.pribasmonolithic.dto.response.MomentResponseDto;
+import com.pribas.pribasmonolithic.exception.ErrorType;
+import com.pribas.pribasmonolithic.exception.MomentException;
 import com.pribas.pribasmonolithic.mapper.IMomentMapper;
+import com.pribas.pribasmonolithic.model.Info;
 import com.pribas.pribasmonolithic.model.Moment;
 import com.pribas.pribasmonolithic.model.Timeline;
 import com.pribas.pribasmonolithic.repository.IMomentRepository;
@@ -22,22 +25,29 @@ public class MomentService {
        return momentRepository.findAll();
     }
 
-    public Optional<Moment> findMomentById(String id) {
-        return momentRepository.findById(id);
+    public Moment findMomentById(String id) {
+        return momentRepository.findById(id).orElseThrow(() -> new MomentException((ErrorType.MOMENT_NOT_FOUND)));
     }
-//    public List<Moment> findMomentsByTimeline(Timeline timeline) {
-//        return momentRepository.findByTimelineTitle(timeline.getTitle());
-//
-//    }
 
     public MomentResponseDto createMoment(Moment moment) {
+        //kullanıcı var mı yok mu
          momentRepository.save(moment);
         return IMomentMapper.INSTANCE.toMomentResponseDto(moment);
     }
 
     public MomentResponseDto updateMomentByTitle(Moment moment) {
-        momentRepository.save(moment);
-        return IMomentMapper.INSTANCE.toMomentResponseDto(moment);
+        Moment moment2 = momentRepository.findById(moment.getMomentId().toString()).get();
+
+        Info info = null;
+        info.setTitle(moment.getInfo().getTitle());
+        info.setDescription(moment.getInfo().getDescription());
+        moment2.setMomentId(moment.getMomentId());
+        moment2.setInfo(info);
+        moment2.setCreationDate(moment.getCreationDate());
+        moment2.setAttachments(moment.getAttachments());
+
+        momentRepository.save(moment2);
+        return IMomentMapper.INSTANCE.toMomentResponseDto(moment2);
 
 
     }
@@ -46,8 +56,11 @@ public class MomentService {
             if (moment == null) {
                 return "No such moment";
             }
-            momentRepository.deleteById(moment.getMomentId());
-            return moment.getTitle() + " titled moment has been deleted";
+            momentRepository.deleteById(moment.getMomentId().toString());
+            return moment.getInfo().getTitle() + " titled moment has been deleted";
             }
 
+    public List<Moment> searchMoment(String key) {
+        return momentRepository.findMomentsByTitleOrDescriptionContaining(key);
+    }
 }

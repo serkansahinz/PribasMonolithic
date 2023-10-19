@@ -2,12 +2,11 @@ package com.pribas.pribasmonolithic.service;
 
 import com.pribas.pribasmonolithic.dto.request.UserRequestDto;
 import com.pribas.pribasmonolithic.dto.response.UserResponseDto;
-import com.pribas.pribasmonolithic.exception.ResourceNotFoundException;
 import com.pribas.pribasmonolithic.mapper.IUserMapper;
 import com.pribas.pribasmonolithic.model.User;
 import com.pribas.pribasmonolithic.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -24,8 +23,8 @@ public class UserService {
        return IUserMapper.INSTANCE.toUserResponseDto(user);
     }
 
-    public UserResponseDto updateUserByName(UserRequestDto userRequestDto) {
-        User user = userRepository.findById(userRequestDto.getUserId()).get();
+    public UserResponseDto updateUser(UserRequestDto userRequestDto) {
+        User user = userRepository.findById(userRequestDto.getUserId().toString()).get();
         user.setUsername(userRequestDto.getUsername());
         user.setEmail(userRequestDto.getEmail());
         userRepository.save(user);
@@ -37,8 +36,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User findUserById(String id) throws ResourceNotFoundException {
-          User user = userRepository.findById(id).
+    public User findUserById(ObjectId id)  {
+          User user = userRepository.findById(id.toString()).
                 orElseThrow( ()-> new ResourceNotFoundException("User not found id: " + id));
         return user;
     }

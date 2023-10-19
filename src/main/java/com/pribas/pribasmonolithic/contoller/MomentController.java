@@ -14,27 +14,27 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(MOMENTS)
+@RequestMapping(MOMENT)
 public class MomentController {
 
     public final MomentService momentService;
 
-    @GetMapping(FINDALL)
+    @GetMapping("/")
     public ResponseEntity<List<Moment>> findAllMoments(){
         return ResponseEntity.ok(momentService.findAllMoments());
     }
 
-    @GetMapping("/find_moment_by_id/{id}")
-    public ResponseEntity<Optional<Moment>> findMomentById(@PathVariable String id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Moment> findMomentById(@PathVariable String id){
         return ResponseEntity.ok(momentService.findMomentById(id));
     }
 
-    @PostMapping("/create_moment")
+    @PostMapping("/")
     public ResponseEntity<MomentResponseDto> createMoment(@RequestBody Moment moment){
         return ResponseEntity.ok(momentService.createMoment(moment));
 
     }
-    @PutMapping("/update_moment")
+    @PutMapping("/")
     public ResponseEntity<MomentResponseDto> updateMomentByTitle(@RequestBody Moment moment){
         return ResponseEntity.ok(momentService.updateMomentByTitle(moment));
     }
@@ -43,4 +43,10 @@ public class MomentController {
     public String deleteMoment(@RequestBody Moment moment){
         return momentService.deleteMoment(moment);
     }
+
+    @GetMapping("/search/{key}")
+    public ResponseEntity<List<Moment>> searchMoment(@PathVariable String key) {
+        return ResponseEntity.ok(momentService.searchMoment(key));
+    }
+
 }

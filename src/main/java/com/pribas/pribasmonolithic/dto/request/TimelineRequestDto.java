@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -15,8 +16,8 @@ import java.util.List;
 @SuperBuilder
 public class TimelineRequestDto extends Info {
 
-    private String timelineId;
+    private ObjectId timelineId;
     private List<Moment> moments;
-    private Long user_id;
+    private ObjectId userId;
     private List<String> tags;
 }
