@@ -2,15 +2,13 @@ package com.pribas.pribasmonolithic.dto.request;
 
 import com.pribas.pribasmonolithic.model.BaseEntity;
 import com.pribas.pribasmonolithic.model.Info;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

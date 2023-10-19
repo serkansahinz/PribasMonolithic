@@ -8,3 +8,4 @@ spring:
       username: serkan
       password: root
       database: pribasDb
+#      url: mongodb://localhost:27017/pribasDb

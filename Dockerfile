@@ -18,4 +18,4 @@ ENTRYPOINT ["java", "-jar", "application.jar"]
 
 
 # Docker image command
-# docker build --build-arg JAR_FILE=build/libs/ConfigServer-v.0.0.1.jar -t mimaraslan/config-server:v001 .
+# docker build --build-arg JAR_FILE=build/libs/PribasMonolithic-0.0.1-SNAPSHOT.jar -t serkansahinz/pribasmonolithic:v001 .
