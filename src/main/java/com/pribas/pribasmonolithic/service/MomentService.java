@@ -1,18 +1,16 @@
 package com.pribas.pribasmonolithic.service;
 
+import com.pribas.pribasmonolithic.dto.request.MomentRequestDto;
 import com.pribas.pribasmonolithic.dto.response.MomentResponseDto;
-import com.pribas.pribasmonolithic.exception.ErrorType;
-import com.pribas.pribasmonolithic.exception.MomentException;
+import com.pribas.pribasmonolithic.exception.ResourceNotFoundException;
 import com.pribas.pribasmonolithic.mapper.IMomentMapper;
 import com.pribas.pribasmonolithic.model.Info;
 import com.pribas.pribasmonolithic.model.Moment;
-import com.pribas.pribasmonolithic.model.Timeline;
 import com.pribas.pribasmonolithic.repository.IMomentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,39 +23,37 @@ public class MomentService {
        return momentRepository.findAll();
     }
 
-    public Moment findMomentById(String id) {
-        return momentRepository.findById(id).orElseThrow(() -> new MomentException((ErrorType.MOMENT_NOT_FOUND)));
+    public Moment findMomentById(String id) throws ResourceNotFoundException{
+        return momentRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("MOMENT NOT FOUND"));
     }
 
-    public MomentResponseDto createMoment(Moment moment) {
-        //kullanıcı var mı yok mu
+    public MomentResponseDto createMoment(MomentRequestDto momentRequestDto) {
+        Moment moment = IMomentMapper.INSTANCE.toMoment(momentRequestDto);
+
          momentRepository.save(moment);
         return IMomentMapper.INSTANCE.toMomentResponseDto(moment);
     }
 
-    public MomentResponseDto updateMomentByTitle(Moment moment) {
-        Moment moment2 = momentRepository.findById(moment.getMomentId().toString()).get();
+    public MomentResponseDto updateMomentById(String id, MomentRequestDto momentRequestDto) throws ResourceNotFoundException {
+        Moment moment = momentRepository.findById(id).
+                orElseThrow(()-> new ResourceNotFoundException("Moment not found ID : " + id));
 
-        Info info = null;
-        info.setTitle(moment.getInfo().getTitle());
-        info.setDescription(moment.getInfo().getDescription());
-        moment2.setMomentId(moment.getMomentId());
-        moment2.setInfo(info);
-        moment2.setCreationDate(moment.getCreationDate());
-        moment2.setAttachments(moment.getAttachments());
 
-        momentRepository.save(moment2);
-        return IMomentMapper.INSTANCE.toMomentResponseDto(moment2);
+        moment.setInfo(momentRequestDto.getInfo());
+        moment.setCreationDate(momentRequestDto.getCreationDate());
+        moment.setAttachments(momentRequestDto.getAttachments());
+
+        momentRepository.save(moment);
+        return IMomentMapper.INSTANCE.toMomentResponseDto(moment);
 
 
     }
 
-    public String deleteMoment(Moment moment) {
-            if (moment == null) {
-                return "No such moment";
-            }
-            momentRepository.deleteById(moment.getMomentId().toString());
-            return moment.getInfo().getTitle() + " titled moment has been deleted";
+    public String deleteMomentById(String id) throws ResourceNotFoundException{
+        Moment moment = momentRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Moment not found ID : " + id));
+
+            momentRepository.deleteById(moment.getMomentId());
+            return moment.getMomentId() + " ID moment has been deleted";
             }
 
     public List<Moment> searchMoment(String key) {

@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface ITimelineRepository extends MongoRepository<Timeline, String> {
 
 
-    // todo sor
+
     @Query("{ $or: [ { 'info.title': { $regex: ?0, $options: 'i' } }, { 'info.description': { $regex: ?0, $options: 'i' } } ] }")
     List<Timeline> findTimelinesByTitleOrDescriptionContaining(String keyword);
 }

@@ -2,10 +2,11 @@ package com.pribas.pribasmonolithic.contoller;
 
 import com.pribas.pribasmonolithic.dto.request.UserRequestDto;
 import com.pribas.pribasmonolithic.dto.response.UserResponseDto;
+import com.pribas.pribasmonolithic.exception.ResourceNotFoundException;
 import com.pribas.pribasmonolithic.model.User;
 import com.pribas.pribasmonolithic.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.bson.types.ObjectId;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable ObjectId id)  {
+    public ResponseEntity<User> findUserById(@PathVariable String id) throws ResourceNotFoundException {
         return ResponseEntity.ok(userService.findUserById(id));
     }
 
@@ -38,13 +39,13 @@ public class UserController {
         return ResponseEntity.ok(userService.createUser(userRequestDto));
 
     }
-    @PutMapping("/")
-    public ResponseEntity<UserResponseDto> updateUser(@RequestBody @Valid UserRequestDto userRequestDto){
-        return ResponseEntity.ok(userService.updateUser(userRequestDto));
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDto> updateUserById(@PathVariable String id, @RequestBody @Valid UserRequestDto userRequestDto) throws ResourceNotFoundException {
+        return ResponseEntity.ok(userService.updateUser(id, userRequestDto));
     }
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable String id){
+    public String deleteUser(@PathVariable String id) throws ResourceNotFoundException {
         return userService.deleteUser(id);
     }
 

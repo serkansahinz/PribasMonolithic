@@ -2,11 +2,11 @@ package com.pribas.pribasmonolithic.contoller;
 
 import com.pribas.pribasmonolithic.dto.request.TimelineRequestDto;
 import com.pribas.pribasmonolithic.dto.response.TimeLineResponseDto;
+import com.pribas.pribasmonolithic.exception.ResourceNotFoundException;
 import com.pribas.pribasmonolithic.model.Moment;
 import com.pribas.pribasmonolithic.model.Timeline;
 import com.pribas.pribasmonolithic.service.TimelineService;
 import lombok.RequiredArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import static com.pribas.pribasmonolithic.constant.RestApiUrl.*;
@@ -26,7 +26,7 @@ public class TimelineController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Timeline> findTimelineById(@PathVariable ObjectId id){
+    public ResponseEntity<Timeline> findTimelineById(@PathVariable String id) throws ResourceNotFoundException {
         return ResponseEntity.ok(timelineService.findTimelineById(id));
     }
 
@@ -35,18 +35,18 @@ public class TimelineController {
         return ResponseEntity.ok(timelineService.createTimeline(timelineRequestDto));
 
     }
-    @PutMapping("/")
-    public ResponseEntity<TimeLineResponseDto> updateTimeline(@RequestBody TimelineRequestDto timelineRequestDto){
-        return ResponseEntity.ok(timelineService.updateTimelineByName(timelineRequestDto));
+    @PutMapping("/{id}")
+    public ResponseEntity<TimeLineResponseDto> updateTimeline(@PathVariable String id, @RequestBody TimelineRequestDto timelineRequestDto) throws ResourceNotFoundException {
+        return ResponseEntity.ok(timelineService.updateTimelineById(id, timelineRequestDto));
     }
 
     @DeleteMapping("/{id}")
-    public String deleteTimelineById(@PathVariable ObjectId id){
+    public String deleteTimelineById(@PathVariable String id) throws ResourceNotFoundException {
         return timelineService.deleteTimelineById(id);
     }
 
     @GetMapping("/moments/{timelineId}")
-    public ResponseEntity<List<Moment>> findMomentsByTimeline(@PathVariable ObjectId timelineId) {
+    public ResponseEntity<List<Moment>> findMomentsByTimeline(@PathVariable String timelineId) {
 
         return ResponseEntity.ok(timelineService.findMomentsByTimeline(timelineId));
     }

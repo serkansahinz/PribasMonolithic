@@ -20,10 +20,10 @@ import java.util.List;
 public class Timeline extends BaseEntity{
 
     @Id
-    private ObjectId timelineId;
+    private String timelineId;
     private Info info;
     private List<Moment> moments;
-    private ObjectId userId;
+    private String userId;
     private List<String> tags;
 
 }

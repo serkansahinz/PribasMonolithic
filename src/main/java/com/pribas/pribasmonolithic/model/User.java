@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -20,7 +19,7 @@ import javax.validation.constraints.NotBlank;
 
 public class User extends BaseEntity{
     @Id
-    private ObjectId userId;
+    private String userId;
     @NotBlank(message = "please enter your user name")
     private String username;
     private String email;

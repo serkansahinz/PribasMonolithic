@@ -8,6 +8,3 @@ spring:
       username: serkan
       password: root
       database: pribasDb
-#      database: userDb
-#      database: momentDb
-#      database: timelineDb

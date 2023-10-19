@@ -1,5 +1,6 @@
 package com.pribas.pribasmonolithic.mapper;
 
+import com.pribas.pribasmonolithic.dto.request.MomentRequestDto;
 import com.pribas.pribasmonolithic.dto.response.MomentResponseDto;
 import com.pribas.pribasmonolithic.dto.response.TimeLineResponseDto;
 import com.pribas.pribasmonolithic.model.Moment;
@@ -13,6 +14,7 @@ public interface IMomentMapper {
 IMomentMapper INSTANCE = Mappers.getMapper(IMomentMapper.class);
 
 Moment toMoment (MomentResponseDto momentResponseDto);
+Moment toMoment(MomentRequestDto momentRequestDto);
 MomentResponseDto toMomentResponseDto (Moment moment);
 
 

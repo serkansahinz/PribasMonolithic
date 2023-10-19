@@ -1,22 +1,21 @@
-#Taslak bakıcam
-#JDK sürümü
+#JDK version
 FROM openjdk:17
 
-# projenin JAR dosyasinin image icindeki adresi
+# address of the project's JAR file in the image
 ARG JAR_FILE=target/*.jar
 
-# image icindeki JAR dosyasinin ad
+# JAR file name in the image
 COPY ${JAR_FILE} application.jar
 
-#Linux gucellemesi
+#Linux update
 CMD apt-get update-y
 
-# projenin calisacagi ic port
+# internal port where the project will run
 EXPOSE 8080
 
-# Container icin projedeki JAR dosyasi  calistiriliyor
+# runs the JAR file in the project for the container
 ENTRYPOINT ["java", "-jar", "application.jar"]
 
 
-# Docker image haline getirme komutu
+# Docker image command
 # docker build --build-arg JAR_FILE=build/libs/ConfigServer-v.0.0.1.jar -t mimaraslan/config-server:v001 .

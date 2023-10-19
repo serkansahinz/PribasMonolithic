@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface IMomentRepository extends MongoRepository<Moment, String> {
 
-    //todo sor
+
     @Query("{ $or: [ { 'info.title': { $regex: ?0, $options: 'i' } }, { 'info.description': { $regex: ?0, $options: 'i' } } ] }")
     List<Moment> findMomentsByTitleOrDescriptionContaining(String keyword);
 }

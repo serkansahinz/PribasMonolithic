@@ -2,21 +2,16 @@ package com.pribas.pribasmonolithic.service;
 
 import com.pribas.pribasmonolithic.dto.request.TimelineRequestDto;
 import com.pribas.pribasmonolithic.dto.response.TimeLineResponseDto;
-import com.pribas.pribasmonolithic.exception.ErrorType;
-import com.pribas.pribasmonolithic.exception.TimelineException;
+import com.pribas.pribasmonolithic.exception.ResourceNotFoundException;
 import com.pribas.pribasmonolithic.mapper.ITimelineMapper;
 import com.pribas.pribasmonolithic.model.Info;
 import com.pribas.pribasmonolithic.model.Moment;
 import com.pribas.pribasmonolithic.model.Timeline;
 import com.pribas.pribasmonolithic.repository.ITimelineRepository;
 import lombok.RequiredArgsConstructor;
-
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
-
-
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -29,10 +24,10 @@ public class TimelineService {
        return timelineRepository.findAll();
     }
 
-    public Timeline findTimelineById(ObjectId id) {
+    public Timeline findTimelineById(String id) throws ResourceNotFoundException {
 
-        return timelineRepository.findById(id.toString()).
-                orElseThrow(() -> new TimelineException(ErrorType.TIMELINE_NOT_FOUND));
+        return timelineRepository.findById(id).
+                orElseThrow(() -> new ResourceNotFoundException("Timeline not found, ID : " + id));
     }
 
     public TimeLineResponseDto createTimeline(TimelineRequestDto timelineRequestDto) {
@@ -42,38 +37,35 @@ public class TimelineService {
         return ITimelineMapper.INSTANCE.toTimeLineResponseDto(timeline);
     }
 
-    public TimeLineResponseDto updateTimelineByName(TimelineRequestDto timelineRequestDto) {
+    public TimeLineResponseDto updateTimelineById(String id, TimelineRequestDto timelineRequestDto) throws ResourceNotFoundException {
 
-        Optional<Timeline> timeline=timelineRepository.findById(timelineRequestDto.getTimelineId().toString());
+        Timeline timeline=timelineRepository.findById(id).
+                orElseThrow(()-> new ResourceNotFoundException("Timeline not found, ID : " + id));
 
-        Info info = null;
-        info.setTitle(timelineRequestDto.getTitle());
-        info.setDescription(timelineRequestDto.getDescription());
 
-        timeline.get().setInfo(info);
-        timeline.get().setMoments(timelineRequestDto.getMoments());
-        timeline.get().setTags(timelineRequestDto.getTags());
-        timeline.get().setUserId(timelineRequestDto.getUserId());
-        timelineRepository.save(timeline.get());
-        return ITimelineMapper.INSTANCE.toTimeLineResponseDto(timeline.get());
+
+
+        timeline.setInfo(timelineRequestDto.getInfo());
+        timeline.setMoments(timelineRequestDto.getMoments());
+        timeline.setTags(timelineRequestDto.getTags());
+        timeline.setUserId(timelineRequestDto.getUserId());
+        timelineRepository.save(timeline);
+        return ITimelineMapper.INSTANCE.toTimeLineResponseDto(timeline);
 
 
 
     }
 
-    public String deleteTimelineById(ObjectId id) {
+    public String deleteTimelineById(String id) throws ResourceNotFoundException {
+        Timeline timeline = timelineRepository.findById(id).
+                orElseThrow(()-> new ResourceNotFoundException("Timeline not found, ID : " + id));
 
-        Optional<Timeline> timeline=timelineRepository.findById(id.toString());
-
-       if (timeline.isEmpty()){
-            return "No such timeline with timeline id" + id;
-        }
-        timelineRepository.deleteById(id.toString());
-        return id + " titled timeline has been deleted";
+        timelineRepository.deleteById(id);
+        return id + " id numbered timeline has been deleted";
     }
 
-    public List<Moment> findMomentsByTimeline(ObjectId timelineId) {
-        Timeline timeline = timelineRepository.findById(timelineId.toString()).get();
+    public List<Moment> findMomentsByTimeline(String timelineId) {
+        Timeline timeline = timelineRepository.findById(timelineId).get();
         return timeline.getMoments();
     }
 
