@@ -2,6 +2,8 @@ package com.pribas.pribasmonolithic.service;
 
 import com.pribas.pribasmonolithic.dto.request.UserRequestDto;
 import com.pribas.pribasmonolithic.dto.response.UserResponseDto;
+import com.pribas.pribasmonolithic.exception.ErrorType;
+import com.pribas.pribasmonolithic.exception.UserException;
 import com.pribas.pribasmonolithic.mapper.IUserMapper;
 import com.pribas.pribasmonolithic.model.User;
 import com.pribas.pribasmonolithic.repository.IUserRepository;
@@ -38,7 +40,7 @@ public class UserService {
 
     public User findUserById(ObjectId id)  {
           User user = userRepository.findById(id.toString()).
-                orElseThrow( ()-> new ResourceNotFoundException("User not found id: " + id));
+                orElseThrow( ()-> new UserException(ErrorType.USER_NOT_FOUND));
         return user;
     }
 
