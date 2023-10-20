@@ -64,7 +64,7 @@ public class TimelineService {
         return id + " id numbered timeline has been deleted";
     }
 
-    public List<Moment> findMomentsByTimeline(String timelineId) {
+    public List<Moment> findMomentsByTimelineId(String timelineId) {
         Timeline timeline = timelineRepository.findById(timelineId).get();
         return timeline.getMoments();
     }

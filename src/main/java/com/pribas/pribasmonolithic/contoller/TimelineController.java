@@ -46,9 +46,9 @@ public class TimelineController {
     }
 
     @GetMapping("/moments/{timelineId}")
-    public ResponseEntity<List<Moment>> findMomentsByTimeline(@PathVariable String timelineId) {
+    public ResponseEntity<List<Moment>> findMomentsByTimelineId(@PathVariable String timelineId) {
 
-        return ResponseEntity.ok(timelineService.findMomentsByTimeline(timelineId));
+        return ResponseEntity.ok(timelineService.findMomentsByTimelineId(timelineId));
     }
 
     @GetMapping("/search/{key}")
