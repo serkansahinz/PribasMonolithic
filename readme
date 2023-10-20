@@ -12,4 +12,7 @@ How to Run the Project
 -To run this project first run docker-compose.yml file, this will run the mongoDB
 -login with username:serkan, password:root to login mongoDB, create database:pribasDb
 -please dont forget to check build.gradle dependencies before running the application
+
+docker pull serkansahinz/pribas-monolithic:v001.jar
+above you can find docker pull comment of the docker image of the project
 -many thanks for your time
